@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="mt-5 d-flex justify-content-between">
+            <div class="mt-2">
+                <caption>Employee <b>Details</b></caption>
+            </div>
+            <div class=""><button class="btn btn-info text-white btn-new"><i class='bi bi-plus'></i>Add New</button></div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-12">
+                <table class="table table-bordered table-responsive">
+                    <thead class="thead-inverse text-center">
+                        <tr>
+                            <th>Name</th>
+                            <th>department</th>
+                            <th>phone</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-white text-center pb-3 fixed-bottom">
+        <p>created by <a href="" class="fw-bold text-white">Ni'matul 'Adhima</a></p>
+    </footer>
+    <script>
+        $('body').on("click", ".btn-new", function() {
+            let html = '<tr>' +
+                '<td><input class="form-control" type="text" name="name" placeholder="Masukan Nama" value=""></td>' +
+                '<td><input class="form-control" type="text" name="dept" placeholder="Masukan departement" value=""></td>' +
+                '<td><input class="form-control" type="text" name="number" placeholder="Masukan nomer" value=""></td>' +
+                '<td class="text-center"><button class="btn btn-success btn-add mx-1" type="button" title="Add"><i class="bi bi-check"></i></button><button class="btn btn-danger btn-delete mx-1" type="button" title="Delete"><i class="bi bi-trash2"></i></button></td>' +
+                '</tr>'
+            $("tbody").append(html)
+        })
+
+        $('body').on("click", ".btn-add", function() {
+            let name = $(this).parents('tr').find("input[name='name']").val();
+            let dept = $(this).parents('tr').find("input[name='dept']").val();
+            let numb = $(this).parents('tr').find("input[name='number']").val();
+
+            $(this).parents('tr').find('td:eq(0)').text(name);
+            $(this).parents('tr').find('td:eq(1)').text(dept);
+            $(this).parents('tr').find('td:eq(2)').text(numb);
+
+            $(this).parents('tr').attr('data-name', name);
+            $(this).parents('tr').attr('data-dept', dept);
+            $(this).parents('tr').attr('data-numb', numb);
+
+            $(this).parents('tr').find('td:eq(3)').prepend("<button type='button' class='btn btn-success btn-edit mx-1' title='Edit'><i class='bi bi-pen'></i></button>");
+            $(this).parents('tr').find('.btn-add').remove();
+        })
+
+        $('body').on('click', '.btn-delete', function() {
+            $(this).parents('tr').remove();
+        })
+
+        $('body').on('click', '.btn-edit', function() {
+            let name = $(this).parents('tr').attr('data-name');
+            let dept = $(this).parents('tr').attr('data-dept');
+            let numb = $(this).parents('tr').attr('data-numb');
+
+            $(this).parents('tr').find('td:eq(0)').html("<input class='form-control' name='edit_name' value='" + name + "'>");
+            $(this).parents('tr').find('td:eq(1)').html("<input class='form-control' name='edit_dept' value='" + dept + "'>");
+            $(this).parents('tr').find('td:eq(2)').html("<input class='form-control' name='edit_numb' value='" + numb + "'>");
+
+            $(this).parents('tr').find('td:eq(3)').prepend("<button type='button' class='btn btn-success btn-update mx-1' title='Update'><i class='bi bi-check'></i></button>");
+            $(this).hide()
+        })
+
+        $('body').on('click', '.btn-update', function() {
+            let name = $(this).parents('tr').find("input[name='edit_name']").val();
+            let dept = $(this).parents('tr').find("input[name='edit_dept']").val();
+            let numb = $(this).parents('tr').find("input[name='edit_numb']").val();
+
+            $(this).parents('tr').find('td:eq(0)').text(name);
+            $(this).parents('tr').find('td:eq(1)').text(dept);
+            $(this).parents('tr').find('td:eq(2)').text(numb);
+
+            $(this).parents('tr').attr('data-name', name);
+            $(this).parents('tr').attr('data-dept', dept);
+            $(this).parents('tr').attr('data-numb', numb);
+
+            $(this).parents('tr').find('.btn-edit').show();
+            $(this).parents('tr').find('.btn-update').remove();
+        })
+    </script>
+</body>
+
+</html>
